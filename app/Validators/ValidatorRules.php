@@ -4,9 +4,9 @@ namespace App\Validators;
 
 use Illuminate\Support\Facades\Validator;
 
-class SupplierValidator
+class ValidatorRules
 {
-    public static function validatorRules(array $data = [])
+    public static function supplierRules(array $data = [])
     {
         return Validator::make(
             $data,
@@ -21,6 +21,18 @@ class SupplierValidator
                 'no_telp_supplier.numeric' => 'no telp harus angka',
                 'no_telp_supplier.regex' => 'no telp memiliki minimal panjang 10 angka maksimal 15 angka',
                 'alamat_supplier.required' => 'alamat harus diisi',
+            ]
+        );
+    }
+    public static function kategoriRules(array $data = [])
+    {
+        return Validator::make(
+            $data,
+            [
+                'nama_kategori' => 'required',
+            ],
+            [
+                'nama_kategori.required' => 'nama kategori harus diisi',
             ]
         );
     }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Supplier;
+use App\Models\Kategori;
 use App\Validators\ValidatorRules;
+use Illuminate\Http\Request;
 
-class SupplierController extends Controller
+class KategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,11 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $data_supplier = Supplier::getAllSupplier();
+        $data_kategori = Kategori::getAllKategori();
         return view(
-            'supplier.index_supplier',
+            'kategori.index_kategori',
             [
-                'data_supplier' => $data_supplier,
+                'data_kategori' => $data_kategori,
             ]
         );
     }
@@ -31,7 +31,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('supplier.create_supplier');
+        return view('kategori.create_kategori');
     }
 
     /**
@@ -43,15 +43,15 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $validator = ValidatorRules::supplierRules($data);
+        $validator = ValidatorRules::kategoriRules($data);
         if ($validator->fails()) {
-            return redirect('/supplier/create')->withErrors($validator)->withInput();
+            return redirect('/kategori/create')->withErrors($validator)->withInput();
         }
         try {
-            Supplier::insertSupplier($data);
-            return redirect('/supplier')->with('success', 'data berhasil ditambahkan');
+            Kategori::insertKategori($request->all());
+            return redirect('/kategori')->with('success', 'data berhasil ditambahkan');
         } catch (\Exception $e) {
-            return redirect('/supplier')->with('failed', 'Terjadi Kesalahan' . $e->getMessage());
+            return redirect('/kategori')->with('failed', 'Terjadi Kesalahan' . $e->getMessage());
         }
     }
 
@@ -74,11 +74,11 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        $supplier = Supplier::getByIdSupplier(decrypt($id));
+        $kategori = Kategori::getByIdKategori(decrypt($id));
         return view(
-            'supplier.edit_supplier',
+            'kategori.edit_kategori',
             [
-                'supplier' => $supplier,
+                'kategori' => $kategori
             ]
         );
     }
@@ -92,17 +92,16 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-        $validator = ValidatorRules::supplierRules($data);
+        $validator = ValidatorRules::kategoriRules($request->all());
         if ($validator->fails()) {
-            return redirect("/supplier/" . $id . "/edit")->withErrors($validator)->withInput();
+            return redirect("/kategori/" . $id . "/edit")->withErrors($validator)->withInput();
         }
         try {
             $data = $request->except('_token', '_method');
-            Supplier::updateSupplier($data, decrypt($id));
-            return redirect('/supplier')->with('success', 'data berhasil diupdate');
+            Kategori::updateKategori($data, decrypt($id));
+            return redirect('/kategori')->with('success', 'data berhasil diupdate');
         } catch (\Exception $e) {
-            return redirect('/supplier')->with('failed', 'Terjadi Kesalahan' . $e->getMessage());
+            return redirect('/kategori')->with('failed', 'Terjadi Kesalahan' . $e->getMessage());
         }
     }
 
@@ -115,10 +114,10 @@ class SupplierController extends Controller
     public function destroy($id)
     {
         try {
-            Supplier::deleteSupplier(decrypt($id));
-            return redirect('/supplier')->with('success', 'data berhasil di delete');
+            Kategori::deleteKategori(decrypt($id));
+            return redirect('/kategori')->with('success', 'data berhasil dihapus');
         } catch (\Exception $e) {
-            return redirect('/supplier')->with('failed', 'Terjadi Kesalahan' . $e->getMessage());
+            return redirect('/kategori')->with('failed', 'Terjadi Kesalahan' . $e->getMessage());
         }
     }
 }
