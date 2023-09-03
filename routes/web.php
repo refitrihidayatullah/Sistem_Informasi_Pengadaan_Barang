@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,3 +35,10 @@ Route::post('/kategori/store', [KategoriController::class, 'store']);
 Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit']);
 Route::put('/kategori/{id}', [KategoriController::class, 'update']);
 Route::delete('/kategori/{id}', [KategoriController::class, 'destroy']);
+
+Route::get('/satuan', [SatuanController::class, 'index']);
+Route::get('/satuan/create', [SatuanController::class, 'create']);
+Route::post('/satuan/store', [SatuanController::class, 'store']);
+Route::get('/satuan/{id}/edit', [SatuanController::class, 'edit']);
+Route::put('/satuan/{id}', [SatuanController::class, 'update']);
+Route::delete('/satuan/{id}', [SatuanController::class, 'destroy']);

@@ -36,4 +36,17 @@ class ValidatorRules
             ]
         );
     }
+    public static function satuanRules(array $data = [])
+    {
+        return Validator::make(
+            $data,
+            [
+                'nama_satuan' => 'required|regex:/^[a-zA-Z\s]+$/',
+            ],
+            [
+                'nama_satuan.required' => 'nama satuan harus diisi',
+                'nama_satuan.regex' => 'nama satuan tidak boleh mengandung angka/simbol',
+            ]
+        );
+    }
 }

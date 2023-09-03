@@ -29,7 +29,7 @@
                 </a>
             </li>          
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle @if(request()->is('barang') || request()->is('kategori') || request()->is('satuan')) active @endif" href="#" id="masterData" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle @if(request()->is('barang') || request()->is('barang/create') || request()->is('kategori') || request()->is('kategori/create') || request()->is('satuan') || request()->is('satuan/create')) active @endif" href="#" id="masterData" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="material-icons opacity-10">table_view</i>
                 </div>
