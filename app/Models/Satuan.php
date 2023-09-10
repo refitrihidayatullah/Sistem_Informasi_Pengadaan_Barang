@@ -30,11 +30,17 @@ class Satuan extends Model
     public static function insertSatuan(array $data = [])
     {
         $data['kd_satuan'] = GenerateCodeAuto::generateCode('STN-', Satuan::class, 'kd_satuan');
+        $data = array_map(function ($value) {
+            return is_string($value) ? strip_tags($value) : $value;
+        }, $data);
         return static::create($data);
     }
     // update data
     public static function updateSatuan(array $data = [], $id)
     {
+        $data = array_map(function ($value) {
+            return is_string($value) ? strip_tags($value) : $value;
+        }, $data);
         return static::where('kd_satuan', $id)->update($data);
     }
     // delete
@@ -45,5 +51,10 @@ class Satuan extends Model
     public function setAttribute($key, $value)
     {
         parent::setAttribute($key, strtoupper($value));
+    }
+    // relasi
+    public function barang()
+    {
+        return $this->hasMany(Barang::class);
     }
 }

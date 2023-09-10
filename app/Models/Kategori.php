@@ -32,12 +32,18 @@ class Kategori extends Model
     public static function insertKategori(array $data = [])
     {
         $data['kd_kategori'] = GenerateCodeAuto::generateCode('KTG-', Kategori::class, 'kd_kategori');
+        $data = array_map(function ($value) {
+            return is_string($value) ? strip_tags($value) : $value;
+        }, $data);
         return static::create($data);
     }
 
     // update data
     public static function updateKategori(array $data = [], $id)
     {
+        $data = array_map(function ($value) {
+            return is_string($value) ? strip_tags($value) : $value;
+        }, $data);
         return static::where('kd_kategori', $id)->update($data);
     }
 
@@ -50,5 +56,11 @@ class Kategori extends Model
     public function setAttribute($key, $value)
     {
         parent::setAttribute($key, strtoupper($value));
+    }
+
+    // relasi
+    public function barang()
+    {
+        return $this->hasMany(Barang::class);
     }
 }

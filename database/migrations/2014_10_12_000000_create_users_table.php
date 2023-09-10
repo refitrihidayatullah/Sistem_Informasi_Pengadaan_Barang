@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name', 30);
             $table->string('username')->unique();
-            $table->integer('no_telp');
+            $table->string('no_telp');
             $table->longText('foto')->nullable();
             $table->string('role');
             $table->string('password');

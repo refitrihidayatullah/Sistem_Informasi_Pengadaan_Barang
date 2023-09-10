@@ -32,12 +32,19 @@ class Supplier extends Model
     public static function insertSupplier(array $data = [])
     {
         $data['kd_supplier'] = GenerateCodeAuto::generateCode('SUP-', Supplier::class, 'kd_supplier');
+        // cek untuk menghapus tag html dari nilai string
+        $data = array_map(function ($value) {
+            return is_string($value) ? strip_tags($value) : $value;
+        }, $data);
         return static::create($data);
     }
 
     // update data
     public static function updateSupplier($data, $id)
     {
+        $data = array_map(function ($value) {
+            return is_string($value) ? strip_tags($value) : $value;
+        }, $data);
         return static::where('kd_supplier', $id)->update($data);
     }
 
@@ -50,5 +57,11 @@ class Supplier extends Model
     public function setAttribute($key, $value)
     {
         parent::setAttribute($key, strtoupper($value));
+    }
+
+    // relasi
+    public function barangmasuk()
+    {
+        return $this->hasMany(BarangMasuk::class);
     }
 }

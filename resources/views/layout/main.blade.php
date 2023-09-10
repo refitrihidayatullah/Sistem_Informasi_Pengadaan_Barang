@@ -32,7 +32,109 @@
 <body class="g-sidenav-show  bg-gray-200">
 
 <!--first sidebar -->
-@include('layout.partials.sidebar')
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-success" id="sidenav-main">
+    <div class="sidenav-header">
+        <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+        <a class="navbar-brand m-0" href="{{url('/dashboard')}}">
+            <img src="{{asset('assets/img/logo.png')}}" class="navbar-brand-img h-100" alt="main_logo">
+            <span class="ms-1 font-weight-bold text-dark">Toko Ragil Jaya</span>
+        </a>
+    </div>
+    <hr class="horizontal light mt-0 mb-2">
+    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link text-white @if(request()->is('dashboard')) active @endif" href="{{url('/dashboard')}}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dashboard</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Master Data</h6>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link text-white @if(request()->is('supplier')) active @endif" href="{{url('/supplier')}}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dashboard</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Supplier</span>
+                </a>
+            </li>          
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle @if(request()->is('barang') || request()->is('barang/create') || request()->is('kategori') || request()->is('kategori/create') || request()->is('satuan') || request()->is('satuan/create')) active @endif" href="#" id="masterData" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="material-icons opacity-10">table_view</i>
+                </div>
+                <span class="nav-link-text ms-1">Barang</span>
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="masterData">
+                  <li><a class="dropdown-item" href="{{url('/kategori')}}">Data Kategori</a></li>
+                  <li><a class="dropdown-item" href="{{url('/satuan')}}">Data Satuan</a></li>
+                  <li><a class="dropdown-item" href="{{url('/barang')}}">Data Barang</a></li>
+                </ul>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Transaksi</h6>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link text-white @if(request()->is('supplier')) active @endif " href="{{url('/barang-masuk')}}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">person</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Barang Masuk</span>
+                </a>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link text-white " href="{{url('/barang-keluar')}}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">receipt_long</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Barang Keluar</span>
+                </a>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Management Account</h6>
+            </li>
+            <li class="nav-item dropdown">
+                
+                <a class="nav-link dropdown-toggle" href="#" id="laporan" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="material-icons opacity-10">table_view</i>
+                </div>
+                <span class="nav-link-text ms-1">Account</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="laporan">
+                  <li><a class="dropdown-item" href="#">DataUsers</a></li>
+                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li><a class="dropdown-item" href="#">Change Password</a></li>
+                  <li><a class="dropdown-item" href="{{url('/logout')}}">Logout</a></li>
+                </ul>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Laporan</h6>
+            </li>
+            <li class="nav-item dropdown">
+                
+                <a class="nav-link dropdown-toggle" href="#" id="laporan" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="material-icons opacity-10">table_view</i>
+                </div>
+                <span class="nav-link-text ms-1">Laporan</span>
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="laporan">
+                  <li><a class="dropdown-item" href="#">Laporan Barang Masuk</a></li>
+                  <li><a class="dropdown-item" href="#">Laporan Barang Keluar</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</aside>
 <!--end sidebar -->
     
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -90,7 +192,7 @@
                             </ul>
                         </li>
                         <li class="nav-item d-flex align-items-center">
-                            <a href="#" class="nav-link text-body font-weight-bold px-0">
+                            <a href="{{url('/logout')}}" class="nav-link text-body font-weight-bold px-0">
                                 <i class="fa fa-user me-sm-1"></i>
                                 <span class="d-sm-inline d-none">Logout</span>
                             </a>
@@ -110,13 +212,331 @@
     <!-- end content -->
 
            <!-- first footer -->
-           @include('layout.partials.footer')
+
+           <footer class="footer py-4  ">
+            <div class="container-fluid">
+                <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                        <div class="copyright text-center text-sm text-muted text-lg-start">
+                            © <script>
+                                document.write(new Date().getFullYear())
+                            </script>,
+                            
+                            <a href="#" class="font-weight-bold">Sistem Informasi Persediaan Barang</a>
+                            Toko Pertanian Ragil Jaya
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+        </footer>
            <!-- end footer -->
         </div>
     </main>
 
    <!-- first js -->
-   @include('layout.partials.js')
+    <!--   Core JS Files   -->
+ <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
+ <script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
+ <script src="{{asset('assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+ <script src="{{asset('assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+ <script src="{{asset('assets/js/plugins/chartjs.min.js')}}"></script>
+ <script>
+     var ctx = document.getElementById("chart-bars").getContext("2d");
+
+     new Chart(ctx, {
+         type: "bar",
+         data: {
+             labels: ["M", "T", "W", "T", "F", "S", "S"],
+             datasets: [{
+                 label: "Sales",
+                 tension: 0.4,
+                 borderWidth: 0,
+                 borderRadius: 4,
+                 borderSkipped: false,
+                 backgroundColor: "rgba(255, 255, 255, .8)",
+                 data: [50, 20, 10, 22, 50, 10, 40],
+                 maxBarThickness: 6
+             }, ],
+         },
+         options: {
+             responsive: true,
+             maintainAspectRatio: false,
+             plugins: {
+                 legend: {
+                     display: false,
+                 }
+             },
+             interaction: {
+                 intersect: false,
+                 mode: 'index',
+             },
+             scales: {
+                 y: {
+                     grid: {
+                         drawBorder: false,
+                         display: true,
+                         drawOnChartArea: true,
+                         drawTicks: false,
+                         borderDash: [5, 5],
+                         color: 'rgba(255, 255, 255, .2)'
+                     },
+                     ticks: {
+                         suggestedMin: 0,
+                         suggestedMax: 500,
+                         beginAtZero: true,
+                         padding: 10,
+                         font: {
+                             size: 14,
+                             weight: 300,
+                             family: "Roboto",
+                             style: 'normal',
+                             lineHeight: 2
+                         },
+                         color: "#fff"
+                     },
+                 },
+                 x: {
+                     grid: {
+                         drawBorder: false,
+                         display: true,
+                         drawOnChartArea: true,
+                         drawTicks: false,
+                         borderDash: [5, 5],
+                         color: 'rgba(255, 255, 255, .2)'
+                     },
+                     ticks: {
+                         display: true,
+                         color: '#f8f9fa',
+                         padding: 10,
+                         font: {
+                             size: 14,
+                             weight: 300,
+                             family: "Roboto",
+                             style: 'normal',
+                             lineHeight: 2
+                         },
+                     }
+                 },
+             },
+         },
+     });
+
+
+     var ctx2 = document.getElementById("chart-line").getContext("2d");
+
+     new Chart(ctx2, {
+         type: "line",
+         data: {
+             labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+             datasets: [{
+                 label: "Mobile apps",
+                 tension: 0,
+                 borderWidth: 0,
+                 pointRadius: 5,
+                 pointBackgroundColor: "rgba(255, 255, 255, .8)",
+                 pointBorderColor: "transparent",
+                 borderColor: "rgba(255, 255, 255, .8)",
+                 borderColor: "rgba(255, 255, 255, .8)",
+                 borderWidth: 4,
+                 backgroundColor: "transparent",
+                 fill: true,
+                 data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+                 maxBarThickness: 6
+
+             }],
+         },
+         options: {
+             responsive: true,
+             maintainAspectRatio: false,
+             plugins: {
+                 legend: {
+                     display: false,
+                 }
+             },
+             interaction: {
+                 intersect: false,
+                 mode: 'index',
+             },
+             scales: {
+                 y: {
+                     grid: {
+                         drawBorder: false,
+                         display: true,
+                         drawOnChartArea: true,
+                         drawTicks: false,
+                         borderDash: [5, 5],
+                         color: 'rgba(255, 255, 255, .2)'
+                     },
+                     ticks: {
+                         display: true,
+                         color: '#f8f9fa',
+                         padding: 10,
+                         font: {
+                             size: 14,
+                             weight: 300,
+                             family: "Roboto",
+                             style: 'normal',
+                             lineHeight: 2
+                         },
+                     }
+                 },
+                 x: {
+                     grid: {
+                         drawBorder: false,
+                         display: false,
+                         drawOnChartArea: false,
+                         drawTicks: false,
+                         borderDash: [5, 5]
+                     },
+                     ticks: {
+                         display: true,
+                         color: '#f8f9fa',
+                         padding: 10,
+                         font: {
+                             size: 14,
+                             weight: 300,
+                             family: "Roboto",
+                             style: 'normal',
+                             lineHeight: 2
+                         },
+                     }
+                 },
+             },
+         },
+     });
+
+     var ctx3 = document.getElementById("chart-line-tasks").getContext("2d");
+
+     new Chart(ctx3, {
+         type: "line",
+         data: {
+             labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+             datasets: [{
+                 label: "Mobile apps",
+                 tension: 0,
+                 borderWidth: 0,
+                 pointRadius: 5,
+                 pointBackgroundColor: "rgba(255, 255, 255, .8)",
+                 pointBorderColor: "transparent",
+                 borderColor: "rgba(255, 255, 255, .8)",
+                 borderWidth: 4,
+                 backgroundColor: "transparent",
+                 fill: true,
+                 data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+                 maxBarThickness: 6
+
+             }],
+         },
+         options: {
+             responsive: true,
+             maintainAspectRatio: false,
+             plugins: {
+                 legend: {
+                     display: false,
+                 }
+             },
+             interaction: {
+                 intersect: false,
+                 mode: 'index',
+             },
+             scales: {
+                 y: {
+                     grid: {
+                         drawBorder: false,
+                         display: true,
+                         drawOnChartArea: true,
+                         drawTicks: false,
+                         borderDash: [5, 5],
+                         color: 'rgba(255, 255, 255, .2)'
+                     },
+                     ticks: {
+                         display: true,
+                         padding: 10,
+                         color: '#f8f9fa',
+                         font: {
+                             size: 14,
+                             weight: 300,
+                             family: "Roboto",
+                             style: 'normal',
+                             lineHeight: 2
+                         },
+                     }
+                 },
+                 x: {
+                     grid: {
+                         drawBorder: false,
+                         display: false,
+                         drawOnChartArea: false,
+                         drawTicks: false,
+                         borderDash: [5, 5]
+                     },
+                     ticks: {
+                         display: true,
+                         color: '#f8f9fa',
+                         padding: 10,
+                         font: {
+                             size: 14,
+                             weight: 300,
+                             family: "Roboto",
+                             style: 'normal',
+                             lineHeight: 2
+                         },
+                     }
+                 },
+             },
+         },
+     });
+ </script>
+ <script>
+     var win = navigator.platform.indexOf('Win') > -1;
+     if (win && document.querySelector('#sidenav-scrollbar')) {
+         var options = {
+             damping: '0.5'
+         }
+         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+     }
+ </script>
+ <script>
+    // Ambil elemen alert
+    var alertElement = document.getElementById('myAlert');
+
+    // Tampilkan alert
+    alertElement.style.display = 'block';
+
+    // Setelah 3 detik, sembunyikan alert
+    setTimeout(function() {
+        alertElement.style.display = 'none';
+    }, 3000); // 3000 milidetik = 3 detik
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const harga = document.getElementById('harga');
+    
+        harga.addEventListener('input', function () {
+            const value = harga.value.replace(/\D/g, '');
+            const formattedValue = new Intl.NumberFormat('id-ID').format(value);
+    
+            harga.value = formattedValue;
+        });
+    });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const harga_jual = document.getElementById('harga_jual');
+        
+            harga_jual.addEventListener('input', function () {
+                const value = harga_jual.value.replace(/\D/g, '');
+                const formattedValue = new Intl.NumberFormat('id-ID').format(value);
+        
+                harga_jual.value = formattedValue;
+            });
+        });
+        </script>
+ <!-- Github buttons -->
+ <script async defer src="https://buttons.github.io/buttons.js"></script>
+ <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+ <script src="{{asset('assets/js/material-dashboard.min.js?v=3.1.0')}}"></script>
    <!-- end js -->
 </body>
 
