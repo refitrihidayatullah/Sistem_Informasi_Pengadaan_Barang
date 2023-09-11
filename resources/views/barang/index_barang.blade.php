@@ -56,10 +56,10 @@
                     <p class="text-xs text-secondary mb-0">{{$barang->satuan->nama_satuan}}</p>
                   </td>
                   <td>
-                    <p class="text-xs text-secondary mb-0">{{$barang->harga_beli}}</p>
+                    <p class="text-xs text-secondary mb-0">Rp {{$barang->harga_beli}}</p>
                   </td>
                   <td>
-                    <p class="text-xs text-secondary mb-0">{{$barang->harga_jual}}</p>
+                    <p class="text-xs text-secondary mb-0">Rp{{$barang->harga_jual}}</p>
                   </td>
                   <td class="align-middle">
                     <a href="{{url("/barang/".encrypt($barang->kd_barang)."/edit")}}" class="text-secondary font-weight-bold text-xs">

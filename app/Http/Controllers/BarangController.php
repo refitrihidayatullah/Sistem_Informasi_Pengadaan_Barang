@@ -112,6 +112,7 @@ class BarangController extends Controller
         }
         try {
             $data = $request->except('_token', '_method');
+            $data['harga_jual'] = str_replace('.', '', $request->harga_jual) ?: $request->harga_jual;
             Barang::updateBarang($data, decrypt($id));
             return redirect('/barang')->with('success', 'data berhasil di update');
         } catch (\Exception $e) {

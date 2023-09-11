@@ -65,19 +65,16 @@
                     <p class="text-xs text-secondary mb-0">{{$barang_masuk->stock}}=>{{$barang_masuk->barang->stock}}</p>
                   </td>
                   <td>
-                    <p class="text-xs text-secondary mb-0">{{$barang_masuk->barang->harga_beli}}</p>
+                    <p class="text-xs text-secondary mb-0">Rp.{{$barang_masuk->harga_beli}}=>Rp.{{$barang_masuk->barang->harga_beli}}</p>
                   </td>
                   <td>
-                    <p class="text-xs text-secondary mb-0">{{$barang_masuk->barang->harga_jual}}</p>
+                    <p class="text-xs text-secondary mb-0">Rp.{{$barang_masuk->barang->harga_jual}}</p>
                   </td>
                   <td>
                     <p class="text-xs text-secondary mb-0">{{$barang_masuk->user->name}}</p>
                   </td>
                   <td class="align-middle">
-                    <a href="{{url("/barang/edit")}}" class="text-secondary font-weight-bold text-xs">
-                      Edit
-                    </a>
-                    <a href="#" style="margin-left: 10px" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#deleteBarangMasukModal">
+                    <a href="#" style="margin-left: 10px" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#deleteBarangMasukModal{{$barang_masuk->buy_id}}">
                       Delete
                     </a>
                   </td>
@@ -92,8 +89,8 @@
     </div>
   </div>
   <!-- Modal -->
-{{-- @foreach ($data_barang as $barang) 
-<div class="modal fade" id="deleteBarangModal{{$barang->kd_barang}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  @foreach ($data_barang_masuk as $barang_masuk) 
+<div class="modal fade" id="deleteBarangMasukModal{{$barang_masuk->buy_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -101,7 +98,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="{{url("/barang/".encrypt($barang->kd_barang))}}" method="POST">
+          <form action="{{url("/barang-masuk/".encrypt($barang_masuk->buy_id))}}" method="POST">
             @csrf
             @method('delete')
             Yakin Akan Menghapus Data?
@@ -115,5 +112,5 @@
       </div>
     </div>
   </div>
-  @endforeach --}}
+  @endforeach
 @endsection

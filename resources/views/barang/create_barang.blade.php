@@ -27,9 +27,14 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="harga" class="form-label">Harga (kg)*</label>
-                        <input type="number" class="form-control p-2 @error('harga') is-invalid @enderror" value="{{old('harga')}}" id="harga" name="harga" placeholder="masukkan nama barang..">
-                        @error('harga')
+                        <label for="satuan_id" class="form-label">Satuan*</label>
+                        <select class="form-select p-2" name="satuan_id" id="satuan_id" aria-label="Default select example">
+                            <option value=""> -- Pilih satuan --</option>
+                            @foreach ($data_satuan as $satuan)
+                            <option value="{{$satuan->kd_satuan}}" {{  old('kategori_id') ?'selected' : '' }}>{{$satuan->nama_satuan}}</option>
+                            @endforeach
+                          </select>
+                          @error('satuan_id')
                         <div class="form-text text-danger">{{$message}}.</div>
                         @enderror
                     </div>

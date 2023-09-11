@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
-use App\Models\BarangMasuk;
 use App\Models\Supplier;
-use App\Validators\ValidatorRules;
+use App\Models\BarangMasuk;
 use Illuminate\Http\Request;
+use App\Validators\ValidatorRules;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class BarangMasukController extends Controller
@@ -115,6 +116,16 @@ class BarangMasukController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $buy_id = decrypt($id);
+            DB::table('barang_masuks')->where('buy_id', $buy_id)->delete();
+            DB::table('tr_barang_masuks')->where('id', $buy_id)->delete();
+            DB::commit();
+            return redirect('/barang-masuk')->with('success', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect('/barang-masuk')->with('failed', 'Terjadi Kesalahan' . $e->getMessage());
+        }
     }
 }

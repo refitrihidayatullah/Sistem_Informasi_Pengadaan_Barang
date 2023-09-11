@@ -56,6 +56,7 @@ Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->middleware(
 Route::get('/barang-masuk', [BarangMasukController::class, 'index'])->middleware('auth',);
 Route::get('/barang-masuk/create', [BarangMasukController::class, 'create'])->middleware('auth',);
 Route::post('/barang-masuk/store', [BarangMasukController::class, 'store'])->middleware('auth',);
+Route::delete('/barang-masuk/{id}', [BarangMasukController::class, 'destroy'])->middleware('auth',);
 
 
 
