@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\RiwayatTransaksi;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -58,11 +60,22 @@ Route::get('/barang-masuk/create', [BarangMasukController::class, 'create'])->mi
 Route::post('/barang-masuk/store', [BarangMasukController::class, 'store'])->middleware('auth',);
 Route::delete('/barang-masuk/{id}', [BarangMasukController::class, 'destroy'])->middleware('auth',);
 
+Route::controller(BarangKeluarController::class)->middleware(['auth'])->group(function () {
+    Route::get('/barang-keluar', 'index');
+    Route::post('/barang-keluar', 'store');
+    Route::post('/barang-keluar/{id}', 'insertTrBarang');
+    Route::delete('/barang-keluar/{id}', 'destroy');
+    Route::get('/barang-keluar/{id}', 'reset');
+});
+
+Route::controller(RiwayatTransaksi::class)->middleware(['auth'])->group(function () {
+    Route::get('/riwayat-transaksi', 'index');
+});
 
 
 
 Route::get('/register', [UserController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/register', [UserController::class, 'action_register'])->middleware('guest');
 Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
-Route::post('/login', [UserController::class, 'action_login'])->middleware('guest');
-Route::get('/logout', [UserController::class, 'action_logout'])->middleware('guest');
+Route::post('/login', [UserController::class, 'action_login']);
+Route::get('/logout', [UserController::class, 'action_logout'])->middleware('auth');

@@ -138,4 +138,29 @@ class ValidatorRules
             ]
         );
     }
+    public static function addBarangKeluarRules(array $data = [])
+    {
+        return Validator::make(
+            $data,
+            [
+                'nama_pelanggan' => 'required|regex:/^[a-zA-Z\s]+$/',
+                'barang_id' => 'required',
+                'jumlah_barang' => 'required|numeric|not_in:-0|min:0',
+                'diskon_barang' => 'numeric|min:0|max:100'
+            ],
+            [
+                'nama_pelanggan.required' => 'nama pelanggan harus diisi',
+                'nama_pelanggan.regex' => 'nama pelanggan tidak boleh mengandung angka atau simbol',
+                'barang_id.required' => 'nama barang harus diisi',
+                'jumlah_barang.required' => 'jumlah barang harus diisi',
+                'jumlah_barang.numerik' => 'jumlah barang harus angka',
+                'jumlah_barang.not_in' => 'jumlah barang tidak boleh angka negatif',
+                'jumlah_barang.min' => 'jumlah barang minimal 1',
+                'diskon_barang.numeric' => 'diskon barang harus angka',
+                'diskon_barang.min' => 'diskon barang minimal 0',
+                'diskon_barang.max' => 'diskon barang maximal 100',
+
+            ]
+        );
+    }
 }

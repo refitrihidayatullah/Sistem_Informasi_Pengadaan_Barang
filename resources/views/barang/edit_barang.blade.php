@@ -37,7 +37,7 @@
                         <div class="form-text text-danger">{{$message}}.</div>
                         @enderror
                     </div>
-                    @if ($barang->harga_jual !=0)
+                    @if ($barang->harga_jual !=0 || $barang->stock !=0)
                     <div class="mb-3">
                         <label for="harga_jual" class="form-label">Harga Jual*</label>
                         <input type="number" class="form-control p-2 @error('harga_jual') is-invalid @enderror" value="{{old('harga_jual')?:$barang->harga_jual}}" id="harga_jual" name="harga_jual" placeholder="masukkan harga jual barang..">

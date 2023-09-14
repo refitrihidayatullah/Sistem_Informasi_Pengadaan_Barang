@@ -80,7 +80,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Transaksi</h6>
             </li> 
             <li class="nav-item">
-                <a class="nav-link text-white @if(request()->is('supplier')) active @endif " href="{{url('/barang-masuk')}}">
+                <a class="nav-link text-white @if(request()->is('barang-masuk')) active @endif " href="{{url('/barang-masuk')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">person</i>
                     </div>
@@ -97,7 +97,16 @@
                     <span class="nav-link-text ms-1">Barang Keluar</span>
                 </a>
             </li>
-            <li class="nav-item mt-3">
+
+            <li class="nav-item">
+                <a class="nav-link text-white " href="{{url('/riwayat-transaksi')}}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">receipt_long</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Riwayat Transaksi</span>
+                </a>
+            </li>
+            {{-- <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Management Account</h6>
             </li>
             <li class="nav-item dropdown">
@@ -114,7 +123,7 @@
                   <li><a class="dropdown-item" href="#">Change Password</a></li>
                   <li><a class="dropdown-item" href="{{url('/logout')}}">Logout</a></li>
                 </ul>
-            </li>
+            </li> --}}
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Laporan</h6>
             </li>
@@ -153,7 +162,7 @@
                     </div>
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-flex align-items-center">
-                            <a class="btn btn-outline-primary btn-sm mb-0 me-3"  href="#">Online Admin</a>
+                            <a class="btn btn-outline-primary btn-sm mb-0 me-3"  href="#">Online {{Auth::user()->name ?:'user'}}</a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                             <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
@@ -533,6 +542,43 @@
             });
         });
         </script>
+        <script>
+            function hitungKembalian()
+            {
+                var grandtotal = parseFloat(document.getElementById('grandtotal').value);
+                var pembayaran = parseFloat(document.getElementById('pembayaran').value);
+                // hitung kembalian
+                var kembalian = pembayaran - grandtotal;
+                if (!isNaN(kembalian) && kembalian >= 0) {
+                document.getElementById('kembalian').textContent ="Rp"+ kembalian;
+            } else {
+                document.getElementById('kembalian').textContent = 0;
+            }
+            }
+        </script>
+        <script>
+            const grandtotalElement = document.getElementById('grandtotal');
+            const pembayaranElement = document.getElementById('pembayaran');
+            const btnbayarElement = document.getElementById('btnbayar');
+
+            function checkPembayaran()
+            {
+                const grandtotal = parseFloat(document.getElementById('grandtotal').value);
+                const pembayaran = parseFloat(document.getElementById('pembayaran').value);
+                if(pembayaran >= grandtotal && grandtotal != 0)
+                {
+                    btnbayarElement.style.display = 'block';
+                }else{
+                    btnbayarElement.style.display = 'none';
+                }
+            }
+            // Panggil fungsi checkPembayaran() saat input pembayaran berubah
+            pembayaranElement.addEventListener('input', checkPembayaran);
+            // Panggil fungsi checkPayment() saat halaman dimuat untuk mengatur status awal tombol "Bayar"
+            checkPembayaran();
+        </script>
+
+
  <!-- Github buttons -->
  <script async defer src="https://buttons.github.io/buttons.js"></script>
  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->

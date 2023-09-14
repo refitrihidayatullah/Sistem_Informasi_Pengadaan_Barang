@@ -19,15 +19,15 @@ class GenerateCodeAuto extends Controller
         }
         return self::$code;
     }
-    public static function generateCodeTransaction()
+    public static function generateCodeTransaction($prefix, $model, $field)
     {
         $tanggal = Carbon::now()->format('ymd');
-        $lastCode = BarangMasuk::orderByDesc('kd_barang_masuk')->first();
+        $lastCode = $model::orderByDesc($field)->first();
         $noUrut = 1;
         if ($lastCode) {
-            $noUrut = intval(substr($lastCode->kd_barang_masuk, -4)) + 1;
+            $noUrut = intval(substr($lastCode[$field], -4)) + 1;
         }
-        self::$code = 'TR-' . $tanggal . str_pad($noUrut, 4, '0', STR_PAD_LEFT);
+        self::$code = $prefix . $tanggal . str_pad($noUrut, 4, '0', STR_PAD_LEFT);
 
         return self::$code;
     }

@@ -14,16 +14,17 @@ return new class extends Migration
      */
     public function up()
     {
-        // trigger saat delete barang masuk maka stok barang berkurang
+
         DB::unprepared('
-    CREATE TRIGGER delete_barang_stok AFTER DELETE ON barang_masuks
-    FOR EACH ROW
-    BEGIN
+        CREATE TRIGGER update_stock_tr_barang_keluar AFTER INSERT ON tr_barang_keluars
+        FOR EACH ROW
+        BEGIN
         UPDATE barangs
-        SET stock = stock - old.stock
-        WHERE kd_barang = old.barang_id;
-    END;
-');
+        SET stock = stock - NEW.stock
+        WHERE kd_barang = NEW.barang_id;
+
+    END
+    ');
     }
 
     /**
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS delete_barang_stok');
+        DB::unprepared('DROP TRIGGER IF EXISTS update_stock_tr_barang_keluar');
     }
 };
