@@ -22,64 +22,52 @@
           @else
           @endif
           <!-- end alert -->
-          {{-- <a href="{{url('/barang-masuk/create')}}" class="btn btn-success mx-3">Add Barang Masuk</a> --}}
+          <a href="{{url('/barang-keluar')}}" class="btn btn-success mx-3">Back</a>
           <div class="table-responsive p-0">
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Barang Masuk</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tgl Masuk</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Supplier</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Barang</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kategori</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Satuan</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Stock</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga Beli</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga Jual</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">user</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Transaksi</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Transaksi</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Pelanggan</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Total</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kasir</th>
                   <th class="text-secondary opacity-7"></th>
                 </tr>
               </thead>
               <tbody>
-                {{-- @foreach ($data_barang_masuk as $barang_masuk)   --}}
+                @foreach ($transaksi_barang as $transaksi)  
                 <tr>
                   <td>
-                    <p class="text-xs text-secondary mb-0 mx-3">1</p>
+                    <p class="text-xs text-secondary mb-0 mx-3">{{$transaksi->kd_transaksi}}</p>
                   </td>
                   <td>
-                    <p class="text-xs text-secondary mb-0 mx-3">1</p>
+                    <p class="text-xs text-secondary mb-0 mx-3">{{$transaksi->tanggal_keluar}}</p>
                   </td>
                   <td>
-                    <p class="text-xs text-secondary mb-0 mx-3">1</p>
+                    <p class="text-xs text-secondary mb-0 mx-3">{{$transaksi->nama_pelanggan}}</p>
                   </td>
                   <td>
-                    <p class="text-xs font-weight-bold mb-0">1</p>
+                    <p class="text-xs font-weight-bold mb-0">Rp.{{$transaksi->grandtotal}}</p>
                   </td>
                   <td>
-                    <p class="text-xs text-secondary mb-0">1</p>
-                  </td>
-                  <td>
-                    <p class="text-xs text-secondary mb-0">1</p>
-                  </td>
-                  <td>
-                    <p class="text-xs text-secondary mb-0">1</p>
-                  </td>
-                  <td>
-                    <p class="text-xs text-secondary mb-0">1</p>
-                  </td>
-                  <td>
-                    <p class="text-xs text-secondary mb-0">1</p>
-                  </td>
-                  <td>
-                    <p class="text-xs text-secondary mb-0">1</p>
+                    @foreach ($user_kasir as $kasir)
+                    
+                    @if($transaksi->user_id == $kasir->id )
+                    <p class="text-xs text-secondary mb-0">{{$kasir->name}}</p>
+                    @endif
+                    @endforeach
                   </td>
                   <td class="align-middle">
-                    <a href="#" style="margin-left: 10px" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#deleteBarangMasukModal">
+                    <a href="{{url("/invoice/".encrypt($transaksi->tanggal_keluar))}}" class="text-secondary font-weight-bold text-xs">
+                      Cetak Nota
+                    </a>
+                    <a href="#" style="margin-left: 10px" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#deleteRiwayatTransaksiModal{{$transaksi->kd_transaksi}}">
                       Delete
                     </a>
                   </td>
                 </tr>
-                {{-- @endforeach --}}
+                @endforeach
 
               </tbody>
             </table>
@@ -89,16 +77,16 @@
     </div>
   </div>
   <!-- Modal -->
-  {{-- @foreach ($data_barang_masuk as $barang_masuk)  --}}
-<div class="modal fade" id="deleteBarangMasukModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  @foreach ($transaksi_barang as $transaksi) 
+<div class="modal fade" id="deleteRiwayatTransaksiModal{{$transaksi->kd_transaksi}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Data Barang</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Data Transaksi Barang Keluar</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="{{url("/barang-masuk/")}}" method="POST">
+          <form action="{{url("/riwayat-transaksi/".encrypt($transaksi->kd_transaksi))}}" method="POST">
             @csrf
             @method('delete')
             Yakin Akan Menghapus Data?
@@ -112,5 +100,5 @@
       </div>
     </div>
   </div>
-  {{-- @endforeach --}}
+  @endforeach
 @endsection

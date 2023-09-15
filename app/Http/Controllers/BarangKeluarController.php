@@ -160,7 +160,7 @@ class BarangKeluarController extends Controller
 
                     session()->forget(['nama_pelanggan', 'tgl_transaksi']);
                     DB::commit();
-                    return redirect('/barang-keluar')->with('success', 'Transaksi Berhasil');
+                    return redirect('/riwayat-transaksi')->with('success', 'Transaksi Berhasil Silahkan Cetak Nota');
                 }
             }
         } catch (\Exception $e) {

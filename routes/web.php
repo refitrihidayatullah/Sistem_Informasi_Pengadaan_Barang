@@ -70,6 +70,8 @@ Route::controller(BarangKeluarController::class)->middleware(['auth'])->group(fu
 
 Route::controller(RiwayatTransaksi::class)->middleware(['auth'])->group(function () {
     Route::get('/riwayat-transaksi', 'index');
+    Route::get('/invoice/{id}', 'cetakTransaksi');
+    Route::delete('/riwayat-transaksi/{id}', 'deleteTransaksi');
 });
 
 
