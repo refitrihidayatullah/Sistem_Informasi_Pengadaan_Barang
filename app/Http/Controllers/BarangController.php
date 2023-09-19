@@ -15,9 +15,19 @@ class BarangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data_barang = Barang::with('kategori', 'satuan')->orderByDesc('updated_at')->get();
+        $key = $request->keybarang;
+        if (strlen($key)) {
+            $data_barang = Barang::with('kategori', 'satuan')->where('kd_barang', 'like', "%$key%")
+                ->orWhere('nama_barang', 'like', "%$key%")
+                ->orWhere('stock', 'like', "%$key%")
+                ->orWhere('harga_beli', 'like', "%$key%")
+                ->orWhere('harga_jual', 'like', "%$key%")
+                ->paginate();
+        } else {
+            $data_barang = Barang::with('kategori', 'satuan')->orderByDesc('updated_at')->paginate(5);
+        }
         return view(
             'barang.index_barang',
             [

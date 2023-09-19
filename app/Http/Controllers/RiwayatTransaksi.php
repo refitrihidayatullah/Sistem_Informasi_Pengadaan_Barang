@@ -11,10 +11,18 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class RiwayatTransaksi extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $transaksi_barang = TrBarangKeluar::select('kd_transaksi', 'nama_pelanggan', 'tanggal_keluar', 'user_id', 'grandtotal')->distinct('tanggal_keluar')
-            ->OrderByDesc('tanggal_keluar')->get();
+        $key = $request->keyriwayattransaksi;
+        if (strlen($key)) {
+            $transaksi_barang = TrBarangKeluar::where('kd_transaksi', 'like', "%$key%")
+                ->orWhere('nama_pelanggan', 'like', "%$key%")
+                ->orWhere('tanggal_keluar', 'like', "%$key%")
+                ->paginate();
+        } else {
+            $transaksi_barang = TrBarangKeluar::select('kd_transaksi', 'nama_pelanggan', 'tanggal_keluar', 'user_id', 'grandtotal')->distinct('tanggal_keluar')
+                ->OrderByDesc('tanggal_keluar')->paginate(5);
+        }
         $user_kasir = User::all();
 
         return view(

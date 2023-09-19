@@ -13,9 +13,16 @@ class KategoriController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data_kategori = Kategori::getAllKategori();
+        $key = $request->keykategori;
+        if (strlen($key)) {
+            $data_kategori = Kategori::where('kd_kategori', 'like', "%$key%")
+                ->orWhere('nama_kategori', 'like', "%$key%")
+                ->paginate();
+        } else {
+            $data_kategori = Kategori::getAllKategoriPaginate(5);
+        }
         return view(
             'kategori.index_kategori',
             [

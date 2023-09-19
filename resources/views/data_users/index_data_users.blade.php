@@ -6,7 +6,7 @@
       <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
           <div class="bg-gradient-white shadow-light border-radius-lg pt-4 pb-3">
-            <h6 class="text-dark text-capitalize ps-3">Table Kategori</h6>
+            <h6 class="text-dark text-capitalize ps-3">Table Data Users</h6>
           </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -22,13 +22,13 @@
           @else
           @endif
           <!-- end alert -->
-          <a href="{{url('/kategori/create')}}" class="btn btn-success mx-3">Add Kategori</a>
+         
 
           <div style="height:40px; black" class="d-flex">
-            <form action="{{url('kategori')}}" method="GET" class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <form action="{{url('data-users')}}" method="GET" class="ms-md-auto pe-md-3 d-flex align-items-center">
               <div class="input-group input-group-outline">
                 <label class="form-label">Type here...</label>
-                <input type="text" value="{{Request::get('key')}}" name="keykategori" class="form-control">
+                <input type="text" value="{{Request::get('key')}}" name="keyusers" class="form-control">
               </div>
               <button style="align-self:center;margin-top:15px;" class="btn btn-sm w-50 btn-outline-secondary mx-3" type="submit">Search</button>
             </form>
@@ -38,25 +38,34 @@
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Kategori</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Kategori</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Username</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">No Telp</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
                   <th class="text-secondary opacity-7"></th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($data_kategori as $kategori)  
+                @foreach ($data_users as $users)  
                 <tr>
                   <td>
-                    <p class="text-xs text-secondary mb-0 mx-3">{{$kategori->kd_kategori}}</p>
+                    <p class="text-xs text-secondary mb-0 mx-3">{{$users->name}}</p>
                   </td>
                   <td>
-                    <p class="text-xs font-weight-bold mb-0">{{$kategori->nama_kategori}}</p>
+                    <p class="text-xs font-weight-bold mb-0">{{$users->username}}</p>
+                  </td>
+                  <td>
+                    <p class="text-xs font-weight-bold mb-0">{{$users->no_telp}}</p>
+                  </td>
+                  <td>
+                    @if ($users->role == 11111)
+                    <p class="text-xs font-weight-bold mb-0">Admin</p>
+                    @else
+                    <p class="text-xs font-weight-bold mb-0">Karyawan</p>
+                    @endif
                   </td>
                   <td class="align-middle">
-                    <a href="{{url("/kategori/".encrypt($kategori->kd_kategori)."/edit")}}" class="text-secondary font-weight-bold text-xs">
-                      Edit
-                    </a>
-                    <a href="#" style="margin-left: 10px" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#deleteKategoriModal{{$kategori->kd_kategori}}">
+                    <a href="#" style="margin-left: 10px" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#deleteDataUsersModal{{$users->id}}">
                       Delete
                     </a>
                   </td>
@@ -67,7 +76,7 @@
             </table>
 
             <div class="p-3">
-              {{ $data_kategori->links()}}
+              {{ $data_users->links()}}
             </div>
 
           </div>
@@ -77,16 +86,16 @@
   </div>
   
   <!-- Modal delete -->
-@foreach ($data_kategori as $kategori) 
-<div class="modal fade" id="deleteKategoriModal{{$kategori->kd_kategori}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+@foreach ($data_users as $users) 
+<div class="modal fade" id="deleteDataUsersModal{{$users->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Data kategori</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Data users</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="{{url("/kategori/".encrypt($kategori->kd_kategori))}}" method="POST">
+          <form action="{{url("/data-users/".encrypt($users->id))}}" method="POST">
             @csrf
             @method('delete')
             Yakin Akan Menghapus Data?

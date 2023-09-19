@@ -21,6 +21,10 @@ class Kategori extends Model
     {
         return static::orderByDesc('updated_at')->get();
     }
+    public static function getAllKategoriPaginate($data)
+    {
+        return static::orderByDesc('updated_at')->paginate($data);
+    }
 
     // get data by id
     public static function getByIdKategori($id)

@@ -13,9 +13,16 @@ class SatuanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data_satuan = Satuan::getAllSatuan();
+        $key = $request->keysatuan;
+        if (strlen($key)) {
+            $data_satuan = Satuan::where('kd_satuan', 'like', "%$key%")
+                ->orWhere('nama_satuan', 'like', "%$key%")
+                ->paginate();
+        } else {
+            $data_satuan = Satuan::getAllSatuanPaginate(5);
+        }
         return view(
             'satuan.index_satuan',
             [

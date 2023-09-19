@@ -13,9 +13,18 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data_supplier = Supplier::getAllSupplier();
+        $key = $request->key;
+        if (strlen($key)) {
+            $data_supplier = Supplier::where('kd_supplier', 'like', "%$key%")
+                ->orWhere('nama_supplier', 'like', "%$key%")
+                ->orWhere('no_telp_supplier', 'like', "%$key%")
+                ->orWhere('alamat_supplier', 'like', "%$key%")
+                ->paginate();
+        } else {
+            $data_supplier = Supplier::getAllSupplierPaginate(5);
+        }
         return view(
             'supplier.index_supplier',
             [

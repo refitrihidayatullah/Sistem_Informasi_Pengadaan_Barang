@@ -1,12 +1,12 @@
 @extends('layout.main')
-@section('title','Data Barang Masuk')
+@section('title','Laporan Barang Masuk')
 @section('content')
 <div class="row">
     <div class="col-12">
       <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
           <div class="bg-gradient-white shadow-light border-radius-lg pt-4 pb-3">
-            <h6 class="text-dark text-capitalize ps-3">Table Barang Masuk</h6>
+            <h6 class="text-dark text-capitalize ps-3">Table Laporan Barang Masuk</h6>
           </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -22,13 +22,12 @@
           @else
           @endif
           <!-- end alert -->
-          <a href="{{url('/barang-masuk/create')}}" class="btn btn-success mx-3">Add Barang Masuk</a>
-
+          <a href="{{url('/laporan-barang-masuk/export')}}" class="btn btn-success mx-3">EXPORT</a>
           <div style="height:40px; black" class="d-flex">
-            <form action="{{url('barang-masuk')}}" method="GET" class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <form action="{{url('laporan-barang-masuk')}}" method="GET" class="ms-md-auto pe-md-3 d-flex align-items-center">
               <div class="input-group input-group-outline">
                 <label class="form-label">Type here...</label>
-                <input type="text" value="{{Request::get('key')}}" name="keybarangmasuk" class="form-control">
+                <input type="text" value="{{Request::get('key')}}" name="keylaporanbarangmasuk" class="form-control">
               </div>
               <button style="align-self:center;margin-top:15px;" class="btn btn-sm w-50 btn-outline-secondary mx-3" type="submit">Search</button>
             </form>
@@ -85,9 +84,7 @@
                     <p class="text-xs text-secondary mb-0">{{$barang_masuk->user->name}}</p>
                   </td>
                   <td class="align-middle">
-                    <a href="#" style="margin-left: 10px" class="text-danger font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#deleteBarangMasukModal{{$barang_masuk->buy_id}}">
-                      Delete
-                    </a>
+                   
                   </td>
                 </tr>
                 @endforeach
@@ -104,29 +101,5 @@
       </div>
     </div>
   </div>
-  <!-- Modal -->
-  @foreach ($data_barang_masuk as $barang_masuk) 
-<div class="modal fade" id="deleteBarangMasukModal{{$barang_masuk->buy_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Data Barang</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="{{url("/barang-masuk/".encrypt($barang_masuk->buy_id))}}" method="POST">
-            @csrf
-            @method('delete')
-            Yakin Akan Menghapus Data?
-            <div style="margin-top: 20px" class="modal-footer">
-            <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">Delete</button>
-            </div>
-          </form>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-  @endforeach
+
 @endsection

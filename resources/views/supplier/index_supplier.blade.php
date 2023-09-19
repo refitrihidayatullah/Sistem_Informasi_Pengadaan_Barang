@@ -23,6 +23,17 @@
           @endif
           <!-- end alert -->
           <a href="{{url('/supplier/create')}}" class="btn btn-success mx-3">Add Supplier</a>
+
+          <div style="height:40px; black" class="d-flex">
+            <form action="{{url('supplier')}}" method="GET" class="ms-md-auto pe-md-3 d-flex align-items-center">
+              <div class="input-group input-group-outline">
+                <label class="form-label">Type here...</label>
+                <input type="text" value="{{Request::get('key')}}" name="key" class="form-control">
+              </div>
+              <button style="align-self:center;margin-top:15px;" class="btn btn-sm w-50 btn-outline-secondary mx-3" type="submit">Search</button>
+            </form>
+          </div>
+
           <div class="table-responsive p-0">
             <table class="table align-items-center mb-0">
               <thead>
@@ -62,6 +73,10 @@
 
               </tbody>
             </table>
+            <div class="p-3">
+              {{ $data_supplier->links()}}
+            </div>
+
           </div>
         </div>
       </div>

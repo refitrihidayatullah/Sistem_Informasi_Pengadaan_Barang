@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\RiwayatTransaksi;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
@@ -25,54 +26,109 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
-Route::get('/dashboard', [DashboardController::class, 'dashboard_admin'])->middleware('auth');
 
-Route::get('/supplier', [SupplierController::class, 'index'])->middleware('auth');
-Route::get('/supplier/create', [SupplierController::class, 'create'])->middleware('auth');
-Route::post('/supplier/store', [SupplierController::class, 'store'])->middleware('auth');
-Route::get('/supplier/{id}/edit', [SupplierController::class, 'edit'])->middleware('auth');
-Route::put('/supplier/{id}', [SupplierController::class, 'update'])->middleware('auth');
-Route::delete('/supplier/{id}', [SupplierController::class, 'destroy'])->middleware('auth');
-
-Route::get('/kategori', [KategoriController::class, 'index'])->middleware('auth');
-Route::get('/kategori/create', [KategoriController::class, 'create'])->middleware('auth');
-Route::post('/kategori/store', [KategoriController::class, 'store'])->middleware('auth');
-Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->middleware('auth');
-Route::put('/kategori/{id}', [KategoriController::class, 'update'])->middleware('auth');
-Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->middleware('auth');
-
-Route::get('/satuan', [SatuanController::class, 'index'])->middleware('auth');
-Route::get('/satuan/create', [SatuanController::class, 'create'])->middleware('auth');
-Route::post('/satuan/store', [SatuanController::class, 'store'])->middleware('auth');
-Route::get('/satuan/{id}/edit', [SatuanController::class, 'edit'])->middleware('auth');
-Route::put('/satuan/{id}', [SatuanController::class, 'update'])->middleware('auth');
-Route::delete('/satuan/{id}', [SatuanController::class, 'destroy'])->middleware('auth');
-
-Route::get('/barang', [BarangController::class, 'index'])->middleware('auth');
-Route::get('/barang/create', [BarangController::class, 'create'])->middleware('auth');
-Route::post('/barang/store', [BarangController::class, 'store'])->middleware('auth');
-Route::get('/barang/{id}/edit', [BarangController::class, 'edit'])->middleware('auth');
-Route::put('/barang/{id}', [BarangController::class, 'update'])->middleware('auth');
-Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->middleware('auth');
-
-Route::get('/barang-masuk', [BarangMasukController::class, 'index'])->middleware('auth',);
-Route::get('/barang-masuk/create', [BarangMasukController::class, 'create'])->middleware('auth',);
-Route::post('/barang-masuk/store', [BarangMasukController::class, 'store'])->middleware('auth',);
-Route::delete('/barang-masuk/{id}', [BarangMasukController::class, 'destroy'])->middleware('auth',);
-
-Route::controller(BarangKeluarController::class)->middleware(['auth'])->group(function () {
-    Route::get('/barang-keluar', 'index');
-    Route::post('/barang-keluar', 'store');
-    Route::post('/barang-keluar/{id}', 'insertTrBarang');
-    Route::delete('/barang-keluar/{id}', 'destroy');
-    Route::get('/barang-keluar/{id}', 'reset');
+// admin dan karyawan
+Route::middleware(['auth'])->group(function () {
+    // dashboard
+    Route::get('/dashboard', [DashboardController::class, 'dashboard_admin']);
+    // barang
+    Route::get('/barang', [BarangController::class, 'index']);
+    // change password
+    Route::get('/change-password', [UserController::class, 'change_password']);
+    Route::post('/change-password', [UserController::class, 'action_change_password']);
 });
 
-Route::controller(RiwayatTransaksi::class)->middleware(['auth'])->group(function () {
-    Route::get('/riwayat-transaksi', 'index');
-    Route::get('/invoice/{id}', 'cetakTransaksi');
-    Route::delete('/riwayat-transaksi/{id}', 'deleteTransaksi');
+// middleware role admin
+Route::middleware(['auth', 'admin-auth'])->group(function () {
+    // supplier
+    Route::controller(SupplierController::class)->group(function () {
+        Route::get('/supplier', 'index');
+        Route::get('/supplier/create',  'create');
+        Route::post('/supplier/store',  'store');
+        Route::get('/supplier/{id}/edit',  'edit');
+        Route::put('/supplier/{id}',  'update');
+        Route::delete('/supplier/{id}',  'destroy');
+    });
+
+    // kategori
+    Route::controller(KategoriController::class)->group(function () {
+
+        Route::get('/kategori', 'index');
+        Route::get('/kategori/create', 'create');
+        Route::post('/kategori/store', 'store');
+        Route::get('/kategori/{id}/edit', 'edit');
+        Route::put('/kategori/{id}', 'update');
+        Route::delete('/kategori/{id}', 'destroy');
+    });
+    //satuan
+    Route::controller(SatuanController::class)->group(function () {
+        Route::get('/satuan',  'index');
+        Route::get('/satuan/create',  'create');
+        Route::post('/satuan/store',  'store');
+        Route::get('/satuan/{id}/edit',  'edit');
+        Route::put('/satuan/{id}',  'update');
+        Route::delete('/satuan/{id}',  'destroy');
+    });
+    //barang
+    Route::controller(BarangController::class)->group(function () {
+        Route::get('/barang/create', 'create');
+        Route::post('/barang/store', 'store');
+        Route::get('/barang/{id}/edit', 'edit');
+        Route::put('/barang/{id}', 'update');
+        Route::delete('/barang/{id}', 'destroy');
+    });
+    // barang-masuk
+    Route::controller(BarangMasukController::class)->group(function () {
+        Route::get('/barang-masuk',  'index');
+        Route::get('/barang-masuk/create',  'create');
+        Route::post('/barang-masuk/store',  'store');
+        Route::delete('/barang-masuk/{id}',  'destroy');
+    });
+    //laporan 
+    Route::controller(LaporanController::class)->group(function () {
+        Route::get('/laporan-barang-masuk', 'laporan_barang_masuk');
+        Route::get('/laporan-barang-masuk/export', 'export_barang_masuk');
+        Route::get('/laporan-barang-keluar', 'laporan_barang_keluar');
+        Route::get('/laporan-barang-keluar/export', 'export_barang_keluar');
+    });
+    // data users
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/data-users', 'data_users');
+        Route::delete('/data-users/{id}', 'delete_user');
+    });
 });
+
+//middleware role karyawan
+Route::middleware(['auth', 'karyawan-auth'])->group(function () {
+    Route::controller(BarangKeluarController::class)->group(function () {
+        Route::get('/barang-keluar', 'index');
+        Route::post('/barang-keluar', 'store');
+        Route::post('/barang-keluar/{id}', 'insertTrBarang');
+        Route::delete('/barang-keluar/{id}', 'destroy');
+        Route::get('/barang-keluar/{id}', 'reset');
+    });
+
+    Route::controller(RiwayatTransaksi::class)->group(function () {
+        Route::get('/riwayat-transaksi', 'index');
+        Route::get('/invoice/{id}', 'cetakTransaksi');
+        Route::delete('/riwayat-transaksi/{id}', 'deleteTransaksi');
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

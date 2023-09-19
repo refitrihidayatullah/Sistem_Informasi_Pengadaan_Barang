@@ -51,17 +51,23 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
+
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Master Data</h6>
             </li> 
+            @if (Auth::user()->role == 11111)
+
+            
             <li class="nav-item">
                 <a class="nav-link text-white @if(request()->is('supplier')) active @endif" href="{{url('/supplier')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">dashboard</i>
+                        <i class="material-icons opacity-10">table_view</i>
                     </div>
                     <span class="nav-link-text ms-1">Supplier</span>
                 </a>
             </li>          
+                
+            @endif
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle @if(request()->is('barang') || request()->is('barang/create') || request()->is('kategori') || request()->is('kategori/create') || request()->is('satuan') || request()->is('satuan/create')) active @endif" href="#" id="masterData" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -71,26 +77,31 @@
                 </a>
                 
                 <ul class="dropdown-menu" aria-labelledby="masterData">
+                  @if(Auth::user()->role == 11111)
                   <li><a class="dropdown-item" href="{{url('/kategori')}}">Data Kategori</a></li>
                   <li><a class="dropdown-item" href="{{url('/satuan')}}">Data Satuan</a></li>
+                  @endif
                   <li><a class="dropdown-item" href="{{url('/barang')}}">Data Barang</a></li>
                 </ul>
             </li>
+           
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Transaksi</h6>
-            </li> 
+            </li>
+            @if(Auth::user()->role == 11111) 
             <li class="nav-item">
                 <a class="nav-link text-white @if(request()->is('barang-masuk')) active @endif " href="{{url('/barang-masuk')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">person</i>
+                        <i class="material-icons opacity-10">table_view</i>
                     </div>
                     <span class="nav-link-text ms-1">Barang Masuk</span>
                 </a>
             </li>
+            @endif
 
-
+            @if(Auth::user()->role == 22222)
             <li class="nav-item">
-                <a class="nav-link text-white " href="{{url('/barang-keluar')}}">
+                <a class="nav-link text-white @if(request()->is('barang-keluar')) active @endif" href="{{url('/barang-keluar')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">receipt_long</i>
                     </div>
@@ -99,37 +110,40 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-white " href="{{url('/riwayat-transaksi')}}">
+                <a class="nav-link text-white @if(request()->is('riwayat-transaksi')) active @endif" href="{{url('/riwayat-transaksi')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">receipt_long</i>
                     </div>
                     <span class="nav-link-text ms-1">Riwayat Transaksi</span>
                 </a>
             </li>
-            {{-- <li class="nav-item mt-3">
+            @endif
+            <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Management Account</h6>
             </li>
             <li class="nav-item dropdown">
                 
-                <a class="nav-link dropdown-toggle" href="#" id="laporan" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle @if(request()->is('data-users') || request()->is('change-password')) active @endif" href="#" id="laporan" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="material-icons opacity-10">table_view</i>
+                    <i class="material-icons opacity-10">person</i>
                 </div>
                 <span class="nav-link-text ms-1">Account</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="laporan">
-                  <li><a class="dropdown-item" href="#">DataUsers</a></li>
-                  <li><a class="dropdown-item" href="#">Profile</a></li>
-                  <li><a class="dropdown-item" href="#">Change Password</a></li>
+                  @if(Auth::user()->role == 11111)
+                  <li><a class="dropdown-item" href="{{url('data-users')}}">Data Users</a></li>
+                  @endif
+                  <li><a class="dropdown-item" href="{{url('change-password')}}">Change Password</a></li>
                   <li><a class="dropdown-item" href="{{url('/logout')}}">Logout</a></li>
                 </ul>
-            </li> --}}
+            </li>
+            @if(Auth::user()->role == 11111)
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Laporan</h6>
             </li>
             <li class="nav-item dropdown">
                 
-                <a class="nav-link dropdown-toggle" href="#" id="laporan" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle @if(request()->is('laporan-barang-masuk') || request()->is('laporan-barang-keluar')) active @endif" href="#" id="laporan" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="material-icons opacity-10">table_view</i>
                 </div>
@@ -137,10 +151,11 @@
                 </a>
                 
                 <ul class="dropdown-menu" aria-labelledby="laporan">
-                  <li><a class="dropdown-item" href="#">Laporan Barang Masuk</a></li>
-                  <li><a class="dropdown-item" href="#">Laporan Barang Keluar</a></li>
+                  <li><a class="dropdown-item" href="{{url('/laporan-barang-masuk')}}">Laporan Barang Masuk</a></li>
+                  <li><a class="dropdown-item" href="{{url('/laporan-barang-keluar')}}">Laporan Barang Keluar</a></li>
                 </ul>
             </li>
+            @endif
         </ul>
     </div>
 </aside>

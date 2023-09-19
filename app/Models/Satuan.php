@@ -21,6 +21,10 @@ class Satuan extends Model
     {
         return static::orderByDesc('updated_at')->get();
     }
+    public static function getAllSatuanPaginate($data)
+    {
+        return static::orderByDesc('updated_at')->paginate($data);
+    }
     // get by id
     public static function getByIdSatuan($id)
     {

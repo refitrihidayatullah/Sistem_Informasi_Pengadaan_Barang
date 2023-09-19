@@ -61,7 +61,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url('/barang')}}"  class="btn btn-primary">Back</a>
+                    <a href="{{url('/barang-masuk')}}"  class="btn btn-primary">Back</a>
                   </form>
             </div>
         </div>

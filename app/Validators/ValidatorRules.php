@@ -163,4 +163,32 @@ class ValidatorRules
             ]
         );
     }
+    public static function insertPembayaranRules(array $data = [])
+    {
+        return Validator::make($data, [
+            'pembayaran' => 'required|numeric|not_in:-0|min:0'
+        ], [
+            'pembayaran.required' => 'pembayaran harus diisi',
+            'pembayaran.numeric' => 'pembayaran harus angka',
+            'pembayaran.no_in' => 'pembayaran tidak boleh angka negatif',
+            'pembayaran.min' => 'pembayaran tidak boleh angka negatif',
+
+        ]);
+    }
+    public static function changePasswordRules(array $data = [])
+    {
+        return Validator::make($data, [
+            'password_old' => 'required|current_password',
+            'password_new' => 'required|min:8|regex:/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])/',
+            'password_confirm' => 'required|same:password_new',
+        ], [
+            'password_old.required' => 'password old harus diisi',
+            'password_new.required' => 'password new harus diisi',
+            'password_new.min' => 'password minimal 8 karakter ',
+            'password_new.regex' => 'password harus mengandung huruf kapital, angka dan simbol ',
+            'password_confirm.required' => 'password confirm harus diisi',
+            'password_confirm.same' => 'password tidak sama',
+
+        ]);
+    }
 }

@@ -106,7 +106,10 @@ class BarangKeluarController extends Controller
         try {
             DB::beginTransaction();
 
-
+            $validator = ValidatorRules::insertPembayaranRules($request->all());
+            if ($validator->fails()) {
+                return redirect('/barang-keluar')->withErrors($validator)->withInput();
+            }
 
             if ($request->tgl_transaksi == decrypt($id)) {
 
