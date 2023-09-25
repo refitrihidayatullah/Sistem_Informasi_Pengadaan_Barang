@@ -24,9 +24,9 @@ return new class extends Migration
             $table->float('harga_jual');
             $table->float('harga_beli');
             $table->float('diskon');
-            $table->float('grandtotal')->nullable();
-            $table->float('pembayaran')->nullable();
-            $table->float('kembalian')->nullable();
+            $table->string('grandtotal')->nullable();
+            $table->string('pembayaran')->nullable();
+            $table->string('kembalian')->nullable();
             $table->timestamps();
         });
     }
